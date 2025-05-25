@@ -36,11 +36,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_25_193526) do
 
   create_table "likes", force: :cascade do |t|
     t.bigint "fan_id", null: false
-    t.string "photo"
-    t.string "references"
+    t.bigint "photo_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fan_id"], name: "index_likes_on_fan_id"
+    t.index ["photo_id"], name: "index_likes_on_photo_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -221,6 +221,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_25_193526) do
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "follow_requests", "users", column: "recipient_id"
   add_foreign_key "follow_requests", "users", column: "sender_id"
+  add_foreign_key "likes", "photos"
   add_foreign_key "likes", "users", column: "fan_id"
   add_foreign_key "photos", "users", column: "owner_id"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
