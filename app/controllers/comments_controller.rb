@@ -50,12 +50,12 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    @comment.destroy!
+    the_id = params.fetch("id")
+    matching_comment = Comment.where({ :id => the_id })
+    the_comment = matching_comment.first
+    the_comment.destroy
 
-    respond_to do |format|
-      format.html { redirect_to comments_path, status: :see_other, notice: "Comment was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_back(fallback_location: root_path)
   end
 
   private
